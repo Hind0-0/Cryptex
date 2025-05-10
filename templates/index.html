@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content-container">
+    <section id="encode" class="section active">
+        <div class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-pen-fancy"></i> Encode Message</h2>
+            <p class="description">Hide your secret message in an image using advanced steganography techniques.</p>
+            
+            <form id="encode-form">
+                <div class="form-group">
+                    <label for="encode-message">Your Secret Message</label>
+                    <textarea id="encode-message" name="message" placeholder="Enter the message you want to hide..." required></textarea>
+                </div>
+                
+                <div class="file-upload-container">
+                    <div class="file-drop-area" id="encode-drop-area">
+                        <span class="file-message">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            Drag & drop image or click to browse
+                        </span>
+                        <input type="file" class="file-input" id="encode-file-input" accept=".png,.jpg,.jpeg,.gif,.bmp">
+                    </div>
+                    <div class="file-preview" id="encode-preview"></div>
+                </div>
+                
+                <div class="warning-message" id="encode-format-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>JPEG is a lossy format. Your image will be converted to PNG to preserve hidden data.</span>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="encode-submit" disabled>
+                        <i class="fa-solid fa-lock"></i> Encode Message
+                    </button>
+                </div>
+            </form>
+            
+            <div class="result-container" id="encode-result">
+                <div class="result-card">
+                    <h3><i class="fa-solid fa-circle-check"></i> Success!</h3>
+                    <p>Your message has been successfully hidden in the image.</p>
+                    <a href="#" id="download-link" class="btn btn-secondary">
+                        <i class="fa-solid fa-download"></i> Download Encoded Image
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="decode" class="section">
+        <div class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Decode Message</h2>
+            <p class="description">Extract hidden messages from images created with steganography.</p>
+            
+            <form id="decode-form">
+                <div class="file-upload-container">
+                    <div class="file-drop-area" id="decode-drop-area">
+                        <span class="file-message">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            Drag & drop image or click to browse
+                        </span>
+                        <input type="file" class="file-input" id="decode-file-input" accept=".png,.jpg,.jpeg,.gif,.bmp">
+                    </div>
+                    <div class="file-preview" id="decode-preview"></div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="decode-submit" disabled>
+                        <i class="fa-solid fa-unlock"></i> Decode Message
+                    </button>
+                </div>
+            </form>
+            
+            <div class="result-container" id="decode-result">
+                <div class="result-card">
+                    <h3><i class="fa-solid fa-circle-check"></i> Message Found!</h3>
+                    <div class="decoded-message-container">
+                        <label>Hidden Message:</label>
+                        <div class="decoded-message" id="decoded-message-text"></div>
+                        <button class="btn btn-small" id="copy-message">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-container" id="decode-no-result">
+                <div class="result-card warning">
+                    <h3><i class="fa-solid fa-circle-exclamation"></i> No Message Found</h3>
+                    <p>No hidden message was detected in this image.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-circle-info"></i> About Steganography</h2>
+            
+            <div class="about-content">
+                <h3>What is Steganography?</h3>
+                <p>Steganography is the practice of hiding a secret message within an ordinary, non-secret file or message to avoid detection. The advantage of steganography over cryptography alone is that the intended secret message does not attract attention to itself as an object of scrutiny.</p>
+                
+                <h3>How Our Tool Works</h3>
+                <p>Our tool uses the Least Significant Bit (LSB) technique to hide messages in images. This method works by replacing the least significant bit of each color channel (RGB) with bits from the secret message.</p>
+                
+                <div class="feature-list">
+                    <div class="feature">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h4>Secure</h4>
+                        <p>Your data never leaves your device - all processing happens in your browser.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h4>Fast</h4>
+                        <p>Advanced algorithms ensure quick encoding and decoding of your messages.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-eye-slash"></i>
+                        <h4>Invisible</h4>
+                        <p>Changes to the image are imperceptible to the human eye.</p>
+                    </div>
+                </div>
+                
+                <h3>Best Practices</h3>
+                <ul class="best-practices">
+                    <li><i class="fa-solid fa-check"></i> Use PNG images for the best results</li>
+                    <li><i class="fa-solid fa-check"></i> Larger images can store longer messages</li>
+                    <li><i class="fa-solid fa-check"></i> Avoid compressing the encoded image</li>
+                    <li><i class="fa-solid fa-check"></i> Use complex images with many colors for better hiding</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-text">Processing your request...</p>
+</div>
+
+<div class="toast" id="toast">
+    <div class="toast-content">
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <div class="toast-message">Message copied to clipboard!</div>
+    </div>
+    <div class="toast-progress"></div>
+</div>
+{% endblock %}
