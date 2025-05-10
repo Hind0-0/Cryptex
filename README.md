@@ -144,4 +144,6 @@ For support, please:
 ---
 
 Made with ❤️ by Hind
+
+---
 Completed in:: 10-5-2025
